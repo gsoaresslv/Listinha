@@ -26,7 +26,6 @@ import soares.guilherme.lista.model.NewActivityViewModel;
 public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
-    //guarda o endereço dos documentos android
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,50 +38,44 @@ public class NewItemActivity extends AppCompatActivity {
             return insets;
         });
 
-        NewActivityViewModel vm = new ViewModelProvider(this).get(NewActivityViewModel.class);
+        NewActivityViewModel vm = new ViewModelProvider(this).get(NewActivityViewModel.class); 
 
-        Uri selectPhotoLocation = vm.getSelectPhotoLocation();
-        if(selectPhotoLocation != null) {
-            ImageView imvPhotoPreview = findViewById(R.id.imvPhotoPreview);
-            imvPhotoPreview.setImageURI(selectPhotoLocation);
+        Uri selectPhotoLocation = vm.getSelectPhotoLocation(); 
+        if(selectPhotoLocation != null) { //se a imagem foi selecionada
+            ImageView imvPhotoPreview = findViewById(R.id.imvPhotoPreview); 
+            imvPhotoPreview.setImageURI(selectPhotoLocation);  //obtem e seta a imagem
         }
 
-        //obtendo botao e setando o listener
         ImageButton imgCI = findViewById(R.id.imbCI);
-        imgCI.setOnClickListener(new View.OnClickListener() {
+        imgCI.setOnClickListener(new View.OnClickListener() {  //obtendo botao e setando o listener
             @Override
 
             //abre a galeria do usuário
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                //recebe apenas documentos do tipo “image/*”
-                photoPickerIntent.setType("image/*");
-                //executa o intent
+                Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT); //cria um intent para abrir a galeria
+                photoPickerIntent.setType("image/*"); //executa o intent
                 startActivityForResult(photoPickerIntent,PHOTO_PICKER_REQUEST);
             }
 
         });
-        //obtem botao btnAddItem
+        
         Button btnAddItem = findViewById(R.id.btnAddItem);
-        //setando o listener
-        btnAddItem.setOnClickListener(new View.OnClickListener(){
+        btnAddItem.setOnClickListener(new View.OnClickListener(){ //obtendo botao e setando o listener 
             @Override
-            //verifica se os campos estão preenchidos
-            public  void onClick(View v){
+            public void onClick(View v){
 
                 NewActivityViewModel vm = new ViewModelProvider(NewItemActivity.this).get(New.class);
-                Uri photoSelected = vm.getSelectPhotoLocation();
+                Uri photoSelected = vm.getSelectPhotoLocation(); //obtem a imagem selecionada
 
-                if (photoSelected == null) {
+                if (photoSelected == null) { //exibe mensagem de erro se a imagem nao foi selecionada
                     Toast.makeText(NewItemActivity.this, "É necessário selecionar uma imagem!" , Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                EditText etTitle = findViewById(R.id.etTitle);
-                String title = etTitle.getText().toString();
+                EditText etTitle = findViewById(R.id.etTitle); 
+                String title = etTitle.getText().toString(); 
 
-                //exibe mensagem de erro se os campos estiverem vazios
-                if (title.isEmpty()) {
+                if (title.isEmpty()) { //exibe mensagem de erro se os campos estiverem vazios
                     Toast.makeText(NewItemActivity.this, "É necessário inserir um título", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -94,14 +87,13 @@ public class NewItemActivity extends AppCompatActivity {
                 }
 
                 //retornando dados para a activity
-                Intent i = new Intent(); //guarda os dados pra retornar
+                Intent i = new Intent();
                 i.setData(photoSelected); //setando o Uri da imagem escolhida dentro do intent
-                //setando titulo e descricao
                 i.putExtra("title",title);
-                i.putExtra("description",description);
-                //indica o resultado
-                setResult(Activity.RESULT_OK, i);// indica que há dados de retorno
-                finish();
+                i.putExtra("description",description); //setando titulo e descricao
+                
+                setResult(Activity.RESULT_OK, i);
+                finish(); //indica o resultado
             }
         });
     }

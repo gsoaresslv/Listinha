@@ -34,71 +34,55 @@ import soares.guilherme.lista.util.Util;
 public class MainActivity extends AppCompatActivity {
 
     static int NEW_ITEM_REQUEST = 1;
-    List<MyItem> itens = new ArrayList<>();
+    List<MyItem> itens = new ArrayList<>(); 
 
-    MyAdapter myAdapter;
+    MyAdapter myAdapter; 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Obtendo o botão FAB e setando o listener
-        FloatingActionButton fabAddItem = findViewById(R.id.fabAddNewItem);
-        fabAddItem.setOnClickListener(new View.OnClickListener() {
+    protected void onCreate(Bundle savedInstanceState) { 
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); //seta o layout da activity
+        FloatingActionButton fabAddItem = findViewById(R.id.fabAddNewItem); //obtem o botao 
+        fabAddItem.setOnClickListener(new View.OnClickListener() { //cria um listener para o botao 
             @Override
-            public void onClick(View v) {
-                //cria uma intent para navegar para NewItemActivity
-                Intent i = new Intent(MainActivity.this,NewItemActivity.class);
-                startActivityForResult(i, NEW_ITEM_REQUEST);
+            public void onClick(View v) { //quando o botao for clicado
+                Intent i = new Intent(MainActivity.this,NewItemActivity.class); //cria uma nova intent
+                startActivityForResult(i, NEW_ITEM_REQUEST); //inicia uma nova activity
 
             }
         });
-        //obtem o RecycleView
         RecyclerView rvItens = findViewById(R.id.rvItens);
         MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        List<MyItem> itens = vm.getItens();
+        List<MyItem> itens = vm.getItens(); //transformando o recicleview em uma lista
 
-        myAdapter = new MyAdapter(this,itens);
-        //criando o MyAdapter e setando no RecycleView
-        rvItens.setAdapter(myAdapter);
-        //o metodo  indica que nao ha variacao de tamanho entre os itens
-        rvItens.setHasFixedSize(true);
-        //criando um gerenciador de layout do tipo linear e o setando no RecycleView
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rvItens.setLayoutManager(layoutManager);
-        //criamos um decorador para a lista
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(),DividerItemDecoration.VERTICAL);
-        rvItens.addItemDecoration(dividerItemDecoration);
-
+        myAdapter = new MyAdapter(this,itens); //criando um adapter para o recicleview
+        rvItens.setAdapter(myAdapter); 
+        rvItens.setHasFixedSize(true); //setando o tamanho do recicleview
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); 
+        rvItens.setLayoutManager(layoutManager); //criando e setando o layout do recicleview
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(),DividerItemDecoration.VERTICAL); //criando uma linha divisoria
+        rvItens.addItemDecoration(dividerItemDecoration); 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //verificando se as condicoes de retorno foram cumpridas
+        super.onActivityResult(requestCode, resultCode, data); //verificando se as condicoes de retorno foram cumpridas
         if(requestCode == NEW_ITEM_REQUEST) {
-            if(resultCode == Activity.RESULT_OK){
-                //se foram cumprida, criamos uma instancia, para guardar dados do item
-                MyItem myItem = new MyItem();
-                //obtemos os dados retornados r NewItemActivity e os guardamos dentro de myItem
+            if(resultCode == Activity.RESULT_OK){ //se o resultado for ok
+                MyItem myItem = new MyItem(); //cria um novo item
                 myItem.title = data.getStringExtra("title");
-                myItem.description = data.getStringExtra("description");
-                Uri selectedPhotoURI = data.getData();
-
+                myItem.description = data.getStringExtra("description"); 
+                Uri selectedPhotoURI = data.getData(); //pegando os dados do item
                 try {
-                    //Essa função carrega a imagem e a guarda dentro de um Bitmap
-                    Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI, 100, 100);
-                    // guardamos o Bitmap da imagem dentro de um objeto do tipo MyItem
-                    myItem.photo = photo;
-                } catch (FileNotFoundException e){
-                    e.printStackTrace();
+                    Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI, 100, 100); 
+                    myItem.photo = photo; //pegando e setando a foto do item
+                } catch (FileNotFoundException e){ //criando erro para caso não haja imagem
+                    e.printStackTrace(); 
                 }
 
-                MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
-                List<MyItem> itens = vm.getItens();
-                //adicionando item a uma lista de itens
-                itens.add(myItem);
-                // notifica o my adapter
-                myAdapter.notifyItemInserted(itens.size()-1);
+                MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class); 
+                List<MyItem> itens = vm.getItens(); //transformando o recicleview em uma lista
+                itens.add(myItem); //adicionando o item a lista
+                myAdapter.notifyItemInserted(itens.size()-1); //notificando o adapter
             }
         }
     }
