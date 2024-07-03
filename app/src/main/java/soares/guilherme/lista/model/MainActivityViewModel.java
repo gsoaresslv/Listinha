@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
-    //guarda a lista de itens cadastrados
-    //método getter para obter a lista de itens
-    List<MyItem> itens = new ArrayList<>();
-
-    public List<MyItem> getItens() {
+    List<MyItem> itens = new ArrayList<>(); // criando uma lista de itens
+    public List<MyItem> getItens() { // função que retorna a lista de itens
         return itens;
     }
 }
