@@ -38,7 +38,7 @@ public class NewItemActivity extends AppCompatActivity {
             return insets;
         });
 
-        NewActivityViewModel vm = new ViewModelProvider(this).get(NewActivityViewModel.class); 
+        NewActivityViewModel vm = new ViewModelProvider(this).get(NewActivityViewModel.class); //obtendo o viewmodel
 
         Uri selectPhotoLocation = vm.getSelectPhotoLocation(); 
         if(selectPhotoLocation != null) { //se a imagem foi selecionada

@@ -34,35 +34,25 @@ public class MyAdapter extends RecicleView.Adapter {MainActivity mainActivity;
 
     @NonNull
     @Override
-    //criando os elementos de interface
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //obtendo um inflador, que sera usado para ler o arquivo xml
-        LayoutInflater inflater = LayoutInflater.from(mainActivity);
-        //usando o inflador para criar os elementos de interface e guardamos dentro de um  objeto do tipo View
-        View v = inflater.inflate(R.layout.item_list,parent,false);
-        //guardado dentro de um objeto do tipo MyViewHolder
-        return new MyViewHolder(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { //cria um novo ViewHolder
+        LayoutInflater inflater = LayoutInflater.from(mainActivity); 
+        View v = inflater.inflate(R.layout.item_list,parent,false); //cria um novo item de lista e inflando o layout
+        return new MyViewHolder(v); // retorna o viewholder criado
     }
 
     @Override
-    //recebe o ViewHolder criado no metodo anterios e preenche os elementos de UI com os dados do item
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        //obtemos o item que será usado para preencher a UI
-        MyItem myItem = itens.get(position);
-        //objeto do tipo View que está guardado dentro do ViewHolder
-        View v = holder.itemView;
-        //preenchendo a UI com os dados do item
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) { 
+        MyItem myItem = itens.get(position); // obtendo o item da lista
+        View v = holder.itemView; // obtendo a viewholder
         ImageView imvfoto = v.findViewById(R.id.imvPhoto);
-        imvfoto.setImageBitmap (myItem.photo);
+        imvfoto.setImageBitmap (myItem.photo); //recebendo e setando a imagem
 
         TextView tvTitle = v.findViewById(R.id.tvTitle);
-        tvTitle.setText(myItem.description);
+        tvTitle.setText(myItem.description); //recebendo e setando a descrição
     }
 
     @Override
-    //informando quantos elementos a lista possui
     public int getItemCount() {
-
-        return itens.size();
+        return itens.size(); // função que retorna o tamanho da lista
     }
 }
