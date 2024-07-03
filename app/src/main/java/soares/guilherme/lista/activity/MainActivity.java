@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 myItem.description = data.getStringExtra("description"); 
                 Uri selectedPhotoURI = data.getData(); //pegando os dados do item
                 try {
-                    Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI, 100, 100); 
-                    myItem.photo = photo; //pegando e setando a foto do item
+                    myItem.photo = Util.getBitmap(this, selectedPhotoURI, 100, 100); //pegando e setando a foto do item
                 } catch (FileNotFoundException e){ //criando erro para caso não haja imagem
                     e.printStackTrace(); 
                 }

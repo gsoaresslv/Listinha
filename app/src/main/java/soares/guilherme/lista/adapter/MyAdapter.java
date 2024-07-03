@@ -17,7 +17,7 @@ import java.util.List;
 import soares.guilherme.lista.R;
 import soares.guilherme.lista.activity.MainActivity;
 import soares.guilherme.lista.model.MyItem;
-public class MyAdapter extends RecicleView.Adapter {MainActivity mainActivity;
+public class MyAdapter extends RecyclerView.Adapter {MainActivity mainActivity;
     List<MyItem> itens;
 
     public MyAdapter(MainActivity mainActivity, List<MyItem>itens){

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import soares.guilherme.lista.R;
-import soares.guilherme.lista.model.NewActivityViewModel;
+import soares.guilherme.lista.model.NewItemActivityViewModel;
 
 public class NewItemActivity extends AppCompatActivity {
 
@@ -38,7 +37,7 @@ public class NewItemActivity extends AppCompatActivity {
             return insets;
         });
 
-        NewActivityViewModel vm = new ViewModelProvider(this).get(NewActivityViewModel.class); //obtendo o viewmodel
+        NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class); //obtendo o viewmodel
 
         Uri selectPhotoLocation = vm.getSelectPhotoLocation(); 
         if(selectPhotoLocation != null) { //se a imagem foi selecionada
@@ -64,7 +63,7 @@ public class NewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                NewActivityViewModel vm = new ViewModelProvider(NewItemActivity.this).get(New.class);
+                NewItemActivityViewModel vm = new ViewModelProvider(NewItemActivity.this).get(NewItemActivityViewModel.class);
                 Uri photoSelected = vm.getSelectPhotoLocation(); //obtem a imagem selecionada
 
                 if (photoSelected == null) { //exibe mensagem de erro se a imagem nao foi selecionada
